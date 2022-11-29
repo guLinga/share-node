@@ -44,6 +44,21 @@ const verifyUser = async (ctx,next) => {
   await next();
 }
 
+// 用户登录的中间件
+const loginMiddleware = async (ctx,next) => {
+
+  const {name,password} = ctx.request.query;
+
+  // 判断用户名和密码是否为空
+  if(!name||!password){
+    const error = new Error(NAME_OP_PASSWORD_IS_REQUIRED);
+    return ctx.app.emit('error',error,ctx);
+  }
+
+  await next();
+
+}
 module.exports = {
-  verifyUser
+  verifyUser,
+  loginMiddleware
 }

@@ -17,6 +17,19 @@ class UserController{
     ctx.body = result;
   }
 
+  // 登录
+  async login(ctx,next){
+    const {name,password} = ctx.request.query;
+    const result = await service.login(name,password);
+    if(result.length===0){
+      return ctx.body = {
+        code: 400,
+        msg: '用户名或密码错误'
+      }
+    }
+    ctx.body = result;
+  }
+
 }
 
 module.exports = new UserController();

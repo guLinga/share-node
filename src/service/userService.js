@@ -27,6 +27,14 @@ class UserService{
     return result;
   }
 
+  // 登录
+  async login(name,password){
+    const statement = `SELECT * FROM users WHERE name = ? AND password = ?;`;
+    const result = await connection.execute(statement,[name,password]);
+    console.log(result[0]);
+    return result[0];
+  }
+
 }
 
 module.exports = new UserService();
