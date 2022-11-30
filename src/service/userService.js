@@ -30,8 +30,7 @@ class UserService{
   // 登录
   async login(name,password){
     const statement = `SELECT * FROM users WHERE name = ? AND password = ?;`;
-    const result = await connection.execute(statement,[name,password]);
-    console.log(result[0]);
+    const result = await connection.execute(statement,[name,md5Encryption(password)]);
     return result[0];
   }
 

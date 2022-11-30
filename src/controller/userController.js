@@ -31,7 +31,11 @@ class UserController{
         msg: '用户名或密码错误'
       }
     }
-    ctx.body = result;
+    ctx.body = {
+      code: 200,
+      msg: '登录成功',
+      data: result
+    };
   }
 
 }

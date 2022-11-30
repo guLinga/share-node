@@ -8,6 +8,11 @@ const errorHandler = require('./error');
 //使用bodyParser解析json格式
 app.use(bodyParser());
 
+app.use(async (ctx, next) => {
+  console.log('中间件',ctx.request.headers.token);
+  await next();
+})
+
 //注册路由
 app.use(userRouter.routes());
 app.use(userRouter.allowedMethods());
