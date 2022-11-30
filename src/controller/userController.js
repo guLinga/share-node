@@ -7,7 +7,11 @@ class UserController{
     const user = ctx.request.body;
     const result = await service.create(user);
     //返回数据
-    ctx.body = result;
+    ctx.body = {
+      code: 200,
+      msg: "注册成功",
+      data: result
+    };
   }
   
   //发送验证码

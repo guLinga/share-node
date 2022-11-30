@@ -7,6 +7,9 @@ const verifyUser = async (ctx,next) => {
   
   const {name,password,email,code} = ctx.request.body;
 
+  console.log(name,password,email,code);
+  console.log(!name||!password,!email,!code);
+
   
   //判断用户名密码是否存在
   if(!name||!password){
@@ -29,6 +32,7 @@ const verifyUser = async (ctx,next) => {
   
   //验证码是否正确
   const temp = judgeCodeSuccess(email,code);
+  console.log(!temp.is);
   if(!temp.is){
     const error = new Error(temp.msg);
     return ctx.app.emit('error',error,ctx);
@@ -36,6 +40,7 @@ const verifyUser = async (ctx,next) => {
 
   //判断注册的用户名是否被注册过
   const result = await service.getUserByName(name);
+  console.log(result.length);
   if(result.length){
     const error = new Error(errorType.USER_ALREADY_EXISTS);
     return ctx.app.emit('error',error,ctx);
