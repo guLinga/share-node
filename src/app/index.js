@@ -5,11 +5,16 @@ const bodyParser = require('koa-bodyparser');
 const userRouter = require('../router/userRouter');
 const errorHandler = require('./error');
 
+const jwt = require('jsonwebtoken');
+
 //使用bodyParser解析json格式
 app.use(bodyParser());
 
+// token鉴权
 app.use(async (ctx, next) => {
-  console.log('中间件',ctx.request.headers.token);
+  if(ctx.request.headers.token){
+    ctx.request.query.userId = jwt.decode(ctx.request.headers.token);
+  }
   await next();
 })
 

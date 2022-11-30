@@ -1,4 +1,5 @@
 const service = require('../service/userService');
+const jwt = require('jsonwebtoken');
 
 class UserController{
 
@@ -34,7 +35,7 @@ class UserController{
     ctx.body = {
       code: 200,
       msg: '登录成功',
-      data: result
+      data: jwt.sign({ userMessage: result }, 'xsx1514')
     };
   }
 
