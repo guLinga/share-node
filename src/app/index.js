@@ -13,7 +13,7 @@ app.use(bodyParser());
 
 // token鉴权
 app.use(async (ctx, next) => {
-  if(ctx.request.headers.token){
+  if(ctx.request.headers.token!=='null'){
     ctx.request.query.userId = jwt.decode(ctx.request.headers.token).userMessage[0].id;
   }
   await next();
