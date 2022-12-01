@@ -3,6 +3,7 @@ const app = new Koa();
 const bodyParser = require('koa-bodyparser');
 
 const userRouter = require('../router/userRouter');
+const diaryRouter = require('../router/diaryRouter');
 const errorHandler = require('./error');
 
 const jwt = require('jsonwebtoken');
@@ -13,13 +14,14 @@ app.use(bodyParser());
 // token鉴权
 app.use(async (ctx, next) => {
   if(ctx.request.headers.token){
-    ctx.request.query.userId = jwt.decode(ctx.request.headers.token);
+    ctx.request.query.userId = jwt.decode(ctx.request.headers.token).userMessage[0].id;
   }
   await next();
 })
 
 //注册路由
 app.use(userRouter.routes());
+app.use(diaryRouter.routes());
 app.use(userRouter.allowedMethods());
 
 //监听error
