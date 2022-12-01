@@ -28,6 +28,13 @@ class DiaryService{
     return result[0];
   }
 
+  // 查询用户的所有日记的日期
+  async calendarList(userId){
+    const statement = `SELECT GROUP_CONCAT(time) time FROM diarys WHERE userId = ?;`;
+    const result = await connection.execute(statement,[userId]);
+    return result[0];
+  }
+
   //根据时间查询日记具体内容
   async searchDiary(userId,time){
     const statement = `SELECT * FROM diarys WHERE userId = ? AND time = ?;`;

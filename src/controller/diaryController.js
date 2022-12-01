@@ -22,6 +22,17 @@ class DiaryController{
     }
   }
 
+  // 查询用户的所有日记的日期
+  async calendarList(ctx,next){
+    const {userId} = ctx.request.query;
+    const result = await service.calendarList(userId);
+    ctx.body = {
+      code: 200,
+      msg: '查询成功',
+      data: result[0].time.split(",")
+    }
+  }
+
 }
 
 module.exports = new DiaryController();
