@@ -34,6 +34,13 @@ class UserService{
     return result[0];
   }
 
+  //模糊查询用户名
+  async searchName(name){
+    const statement = `SELECT * FROM users WHERE name LIKE ?;`;
+    const result = await connection.execute(statement,[`%${name}%`]);
+    return result[0];
+  }
+
 }
 
 module.exports = new UserService();

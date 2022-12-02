@@ -39,6 +39,24 @@ class UserController{
     };
   }
 
+  //通过用户名模糊查询用户
+  async searchName(ctx,next){
+    const {name} = ctx.request.query;
+    if(!name){
+      return ctx.body = {
+        code: 400,
+        msg: '用户名不能为空'
+      }
+    }else{
+      const result = await service.searchName(name);
+      return ctx.body = {
+        code: 200,
+        msg: '查询成功',
+        data: result
+      }
+    }
+  }
+
 }
 
 module.exports = new UserController();
