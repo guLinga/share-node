@@ -7,9 +7,9 @@ class UserService{
 
   //注册
   async create(user){
-    const {name,password} = user;
-    const statement = `INSERT INTO users (name,password) VALUES (?,?);`;
-    const result = await connection.execute(statement,[name,md5Encryption(password)]);
+    const {name,password,email} = user;
+    const statement = `INSERT INTO users (name,password,email) VALUES (?,?,?);`;
+    const result = await connection.execute(statement,[name,md5Encryption(password),email]);
     return result[0];
   }
 
