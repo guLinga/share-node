@@ -4,6 +4,7 @@ const bodyParser = require('koa-bodyparser');
 
 const userRouter = require('../router/userRouter');
 const diaryRouter = require('../router/diaryRouter');
+const friendRouter = require('../router/friendRouter');
 const errorHandler = require('./error');
 
 const jwt = require('jsonwebtoken');
@@ -22,7 +23,10 @@ app.use(async (ctx, next) => {
 //注册路由
 app.use(userRouter.routes());
 app.use(diaryRouter.routes());
-app.use(userRouter.allowedMethods());
+app.use(friendRouter.routes());
+
+// app.use(userRouter.allowedMethods());
+
 
 //监听error
 app.on('error',errorHandler)

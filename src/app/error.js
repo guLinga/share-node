@@ -3,8 +3,6 @@
 const errorType = require('../constants/error-types');
 
 const errorHandler = (error,ctx) => {
-
-  console.log(error);
   
   let status,message;
 
@@ -29,6 +27,18 @@ const errorHandler = (error,ctx) => {
       break;
     case errorType.CODE_PAST: 
       message = {code:400,msg:"验证码已过期"};
+      break;
+    case errorType.FRIEND_NAME_NOT_EMPTY:
+      message = {code:400,msg:"笔友名不能为空"};
+      break;
+    case errorType.FRIEND_NAME_NOT_EXIST:
+      message = {code:400,msg:'笔友不存在'};
+      break;
+    case errorType.NOT_ADD_SELF_FRIEND:
+      message = {code:400,msg:'不能添加自己成笔友'};
+      break;
+    case errorType.ALREADY_FRIEND:
+      message = {code:400,msg:'已经是好友了，不能重复添加'};
       break;
     default:
       message = {code:404,msg:"NOT FOUND"};
