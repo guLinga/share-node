@@ -1,2 +1,5 @@
 /node_modules
 /.env
+/share-doc-node-linux
+/share-doc-node-macos
+/share-doc-node-win.exe

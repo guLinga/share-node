@@ -18,6 +18,18 @@
   "scripts": {
     "start": "nodemon ./src/main.js"
   },
+  "bin": "./src/main.js",
+  "pkg": {
+    "bin": "./src/main.js",
+    "scripts": "public/**/*.js",
+    "assets": [
+      "public/**/*",
+      "views/**/*"
+    ],
+    "target": [
+      "node16-win-x64"
+    ]
+  },
   "devDependencies": {
     "nodemon": "^2.0.20"
   }
