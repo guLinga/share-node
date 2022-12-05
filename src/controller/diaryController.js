@@ -26,10 +26,11 @@ class DiaryController{
   async calendarList(ctx,next){
     const {userId} = ctx.request.query;
     const result = await service.calendarList(userId);
+    console.log(result);
     ctx.body = {
       code: 200,
       msg: '查询成功',
-      data: result[0].time.split(",")
+      data: !result[0].time ? [] : result[0].time.split(",")
     }
   }
 
