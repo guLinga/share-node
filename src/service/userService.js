@@ -36,7 +36,7 @@ class UserService{
 
   //模糊查询用户名
   async searchName(name){
-    const statement = `SELECT * FROM users WHERE name LIKE ?;`;
+    const statement = `SELECT name, id FROM users WHERE name LIKE ?;`;
     const result = await connection.execute(statement,[`%${name}%`]);
     return result[0];
   }
