@@ -49,7 +49,7 @@ class DiaryService{
 
   //修改statue的状态，2表示添加好友，0表示发起好友请求
   async modifyStatue(userId,statue){
-    const statement = `UPDATE friends SET statue = '?' WHERE userId = ?;`;
+    const statement = `UPDATE friends SET statue = ? WHERE userId = ?;`;
     await connection.execute(statement,[statue,userId]);
   }
 
