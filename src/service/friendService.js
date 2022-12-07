@@ -3,11 +3,11 @@ const {SendMail} = require('../utils/mail');
 const {createCode} = require('../utils/code');
 const {md5Encryption} = require('../utils/md5');
 
-class DiaryService{
+class FriendService{
   //添加或修改日记内容
   async quest(friendId,userId){
     // 判断对方是否向我发起好友请求
-    const temp = await this.friendQuest(friendId);
+    const temp = await this.friendQuest(friendId,userId);
     if(temp.length!==0){
       //如果是，那么直接修改值和添加一条数据
       await this.modifyStatue(friendId,'2');
@@ -16,7 +16,8 @@ class DiaryService{
     }else{
       //如果否
       // 判断是否已经发送过好友请求
-      const temp2 = await this.friendQuest(userId);
+      const temp2 = await this.friendQuest(userId,friendId);
+      console.log(temp2);
       if(temp2.length===0){
         // 如果不是，则添加数据
         await this.addStatue(userId,friendId,'0');
@@ -32,6 +33,19 @@ class DiaryService{
     return result[0];
   }
 
+  // 查询好友列表
+  async friendList(userId){
+    console.log(userId);
+    const statement = `SELECT f.friendId, u.name, f.updateAt FROM friends f LEFT JOIN users u ON f.friendId = u.id
+    WHERE f.statue = 2 AND f.userId = 1 ORDER BY f.updateAt DESC;`;
+    const result = await connection.execute(statement,[userId]);
+    return {
+      code: 200,
+      msg: '查询成功',
+      data: result[0]
+    };
+  }
+
   // 判断双方是否已经是好友
   async alreadyFriend(userId,friendId){
     const statement = `SELECT * FROM friends WHERE userId = ? AND friendId = ?;`;
@@ -41,9 +55,9 @@ class DiaryService{
   }
 
   // 判断对方是否发起请求
-  async friendQuest(friendId){
-    const statement = `SELECT * FROM friends WHERE userId = ?;`;
-    const result = await connection.execute(statement,[friendId]);
+  async friendQuest(userId,friendId){
+    const statement = `SELECT * FROM friends WHERE userId = ? AND friendId = ?;`;
+    const result = await connection.execute(statement,[userId,friendId]);
     return result[0];
   }
 
@@ -59,6 +73,8 @@ class DiaryService{
     await connection.execute(statement,[userId,friendId,statue]);
   }
 
+
+
 }
 
-module.exports = new DiaryService();
+module.exports = new FriendService();

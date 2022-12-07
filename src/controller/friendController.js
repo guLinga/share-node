@@ -11,6 +11,13 @@ class FinendController{
     ctx.body = result;
   }
 
+  // 遍历好友列表
+  async friendList(ctx,next){
+    const {userId} = ctx.request.query;
+    const result = await service.friendList(userId);
+    ctx.body = result;
+  }
+
 }
 
 module.exports = new FinendController();
