@@ -25,8 +25,7 @@ io.on("connection",(socket)=>{
     console.log(data.msg);
     const sendUserSocket = onlineUsers.get(data.to);
     if (sendUserSocket) {
-      // socket.to(sendUserSocket).emit("msg-recieve", data.msg);
-      sendUserSocket.emit("msg-recieve", data.msg);
+      sendUserSocket.emit("msg-recieve", data.msg.replace('<','&lt;').replace('>','&gt;').replace('\n','<br>'));
     }
   });
 })
