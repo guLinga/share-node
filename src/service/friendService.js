@@ -17,7 +17,6 @@ class FriendService{
       //如果否
       // 判断是否已经发送过好友请求
       const temp2 = await this.friendQuest(userId,friendId);
-      console.log(temp2);
       if(temp2.length===0){
         // 如果不是，则添加数据
         await this.addStatue(userId,friendId,'0');
@@ -35,7 +34,6 @@ class FriendService{
 
   // 查询好友列表
   async friendList(userId){
-    console.log(userId);
     const statement = `SELECT f.friendId, u.name, f.updateAt FROM friends f LEFT JOIN users u ON f.friendId = u.id
     WHERE f.statue = 2 AND f.userId = ? ORDER BY f.updateAt DESC;`;
     const result = await connection.execute(statement,[userId]);

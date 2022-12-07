@@ -7,7 +7,6 @@ class FinendController{
     const {friendName,friendId} = ctx.request.body;
     const {userId} = ctx.request.query;
     const result = await service.quest(friendId,userId);
-    // console.log(result);
     ctx.body = result;
   }
 

@@ -44,7 +44,6 @@ class DiaryService{
 
   // 插入日记内容
   async insterArticle(userId,article,time){
-    console.log(userId);
     const statement = `INSERT INTO diarys (userId,article,time) VALUES (?,?,?);`;
     const result = await connection.execute(statement,[userId,article,time]);
     return result;

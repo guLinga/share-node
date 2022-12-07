@@ -26,7 +26,6 @@ class DiaryController{
   async calendarList(ctx,next){
     const {userId} = ctx.request.query;
     const result = await service.calendarList(userId);
-    console.log(result);
     ctx.body = {
       code: 200,
       msg: '查询成功',
