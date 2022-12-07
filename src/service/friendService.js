@@ -37,7 +37,7 @@ class FriendService{
   async friendList(userId){
     console.log(userId);
     const statement = `SELECT f.friendId, u.name, f.updateAt FROM friends f LEFT JOIN users u ON f.friendId = u.id
-    WHERE f.statue = 2 AND f.userId = 1 ORDER BY f.updateAt DESC;`;
+    WHERE f.statue = 2 AND f.userId = ? ORDER BY f.updateAt DESC;`;
     const result = await connection.execute(statement,[userId]);
     return {
       code: 200,
