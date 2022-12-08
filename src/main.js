@@ -21,11 +21,18 @@ io.on("connection",(socket)=>{
   socket.on("add-user",(userId)=>{
     onlineUsers.set(userId,socket)
   })
+  // 发送消息
   socket.on("send-msg", (data) => {
-    console.log(data.msg);
     const sendUserSocket = onlineUsers.get(data.to);
     if (sendUserSocket) {
       sendUserSocket.emit("msg-recieve", data.msg.replace('<','&lt;').replace('>','&gt;').replace('\n','<br>'));
     }
   });
+  // 发送好友请求
+  socket.on("send_friend_quest", (data) => {
+    const sendUserSocket = onlineUsers.get(data.to);
+    if(sendUserSocket){
+      sendUserSocket.emit("recivece_friend_quest", data);
+    }
+  })
 })
