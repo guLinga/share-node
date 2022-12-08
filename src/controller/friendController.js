@@ -17,6 +17,13 @@ class FinendController{
     ctx.body = result;
   }
 
+  // 遍历我发送的好友请求列表
+  async myFriendQuest(ctx,next){
+    const {userId} = ctx.request.query;
+    const result = await service.myFriendQuest(userId);
+    ctx.body = result;
+  }
+
 }
 
 module.exports = new FinendController();
