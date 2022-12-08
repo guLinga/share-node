@@ -24,6 +24,14 @@ class FinendController{
     ctx.body = result;
   }
 
+  // 发送消息
+  async send(ctx,next){
+    const {userId} = ctx.request.query;
+    const {message,friendId} = ctx.request.body;
+    const result = await service.send(userId,friendId,message);
+    ctx.body = result;
+  }
+
 }
 
 module.exports = new FinendController();

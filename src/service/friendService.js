@@ -44,6 +44,18 @@ class FriendService{
     };
   }
 
+  // 发送消息
+  async send(userId,friendId,message){
+    if(!userId||!friendId||!message)return {code: 400,msg: '参数传递不完整'};
+    const statement = `INSERT INTO message (userId,friendId,message) VALUES (?,?,?);`;
+    const result = await connection.execute(statement,[userId,friendId,message]);
+    return {
+      code: 200,
+      msg: '发送成功',
+      data: result
+    }
+  }
+
   // 遍历我发送的好友请求列表
   async myFriendQuest(userId){
     const statement = `SELECT f.friendId, u.name, f.updateAt FROM friends f LEFT JOIN users u ON f.friendId = u.id
