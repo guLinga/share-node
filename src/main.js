@@ -25,7 +25,8 @@ io.on("connection",(socket)=>{
   socket.on("send-msg", (data) => {
     const sendUserSocket = onlineUsers.get(data.to);
     if (sendUserSocket) {
-      sendUserSocket.emit("msg-recieve", data.msg.replace('<','&lt;').replace('>','&gt;').replace('\n','<br>'));
+      data.msg = data.msg.replace('<','&lt;').replace('>','&gt;').replace('\n','<br>');
+      sendUserSocket.emit("msg-recieve", data);
     }
   });
   // 发送好友请求
