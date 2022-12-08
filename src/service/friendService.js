@@ -68,6 +68,20 @@ class FriendService{
     }
   }
 
+  // 获取好友列表
+  async messageList(userId,friendId){
+    if(!userId||!friendId)return {code: 400,msg: '参数传递不完整'};
+    const statement = `SELECT * FROM message WHERE
+    (message.userId = 1 AND message.friendId = 3) | (message.userId = 3 AND message.friendId = 1)
+    ORDER BY message.updateAt ASC;`;
+    const result = await connection.execute(statement,[userId,friendId,friendId,userId]);
+    return {
+      code: 200,
+      msg: '遍历成功',
+      data: result[0]
+    }
+  }
+
   // 判断双方是否已经是好友
   async alreadyFriend(userId,friendId){
     const statement = `SELECT * FROM friends WHERE userId = ? AND friendId = ?;`;

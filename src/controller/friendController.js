@@ -32,6 +32,13 @@ class FinendController{
     ctx.body = result;
   }
 
+  // 获取好友列表
+  async messageList(ctx,next){
+    const {userId,friendId} = ctx.request.query;
+    const result = await service.messageList(userId,friendId);
+    ctx.body = result;
+  }
+
 }
 
 module.exports = new FinendController();
