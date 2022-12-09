@@ -11,7 +11,7 @@ friendRouter.get('/friendList',friendList)
 friendRouter.get('/myFriendQuest',myFriendQuest)
 // 发送消息
 friendRouter.post('/send',send);
-// 获取好友列表
+// 获取好友聊天消息列表
 friendRouter.get('/messageList',messageList);
 
 module.exports = friendRouter;

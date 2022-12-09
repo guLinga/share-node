@@ -68,11 +68,11 @@ class FriendService{
     }
   }
 
-  // 获取好友列表
+  // 获取好友聊天消息列表
   async messageList(userId,friendId){
     if(!userId||!friendId)return {code: 400,msg: '参数传递不完整'};
     const statement = `SELECT * FROM message WHERE
-    (message.userId = 1 AND message.friendId = 3) | (message.userId = 3 AND message.friendId = 1)
+    (message.userId = ? AND message.friendId = ?) | (message.userId = ? AND message.friendId = ?)
     ORDER BY message.updateAt ASC;`;
     const result = await connection.execute(statement,[userId,friendId,friendId,userId]);
     return {
