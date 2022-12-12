@@ -46,6 +46,14 @@ class FinendController{
     ctx.body = result;
   }
 
+  // 清除未读消息
+  async clearUnread(ctx,next){
+    const {userId} = ctx.request.query;
+    const {friendId} = ctx.request.body;
+    const result = await service.clearUnread(userId,friendId);
+    ctx.body  = result;
+  }
+
 }
 
 module.exports = new FinendController();

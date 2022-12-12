@@ -46,14 +46,41 @@ class FriendService{
 
   // 发送消息
   async send(userId,friendId,message){
+    console.log(userId,friendId);
     if(!userId||!friendId||!message)return {code: 400,msg: '参数传递不完整'};
     const statement = `INSERT INTO message (userId,friendId,message) VALUES (?,?,?);`;
     const result = await connection.execute(statement,[userId,friendId,message]);
+    // 添加未读消息
+    await this.addUnread(userId,friendId);
     return {
       code: 200,
       msg: '发送成功',
       data: result
     }
+  }
+
+  // 添加未读消息
+  async addUnread(userId,friendId){
+    const num = await this.searchUnread(userId,friendId);
+    const statement = `UPDATE friends SET unread = ? WHERE userId = ? AND friendId = ?;`
+    await connection.execute(statement,[num+1,userId,friendId]);
+  }
+
+  // 清空未读消息
+  async clearUnread(userId,friendId){
+    const statement = `UPDATE friends SET unread = 0 WHERE userId = ? AND friendId = ?;`
+    const result = await connection.execute(statement,[userId,friendId]);
+    return {
+      code: 200,
+      msg: '未读消息清空'
+    }
+  }
+
+  // 查询未读消息数量
+  async searchUnread(userId,friendId){
+    const statement = `SELECT unread FROM friends WHERE userId = ? AND friendId = ?;`
+    const result = await connection.execute(statement,[userId,friendId]);
+    return result[0][0].unread;
   }
 
   // 遍历我发送的好友请求列表

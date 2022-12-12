@@ -1,6 +1,6 @@
 const Router = require('koa-router');
 const friendRouter = new Router({prefix: '/friend'});
-const {quest,friendList,myFriendQuest,send,messageList,getFriendQuest} = require('../controller/friendController');
+const {quest,friendList,myFriendQuest,send,messageList,getFriendQuest,clearUnread} = require('../controller/friendController');
 const {friendQuest} = require('../middleware/friendMiddleware');
 
 // 请求对方为好友
@@ -13,6 +13,8 @@ friendRouter.get('/myFriendQuest',myFriendQuest)
 friendRouter.get('/getFriendQuest',getFriendQuest)
 // 发送消息
 friendRouter.post('/send',send);
+// 清除未读消息
+friendRouter.put('/clearUnread',clearUnread)
 // 获取好友聊天消息列表
 friendRouter.get('/messageList',messageList);
 
