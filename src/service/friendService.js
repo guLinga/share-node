@@ -34,7 +34,7 @@ class FriendService{
 
   // 查询好友列表
   async friendList(userId){
-    const statement = `SELECT f.friendId, u.name, f.updateAt FROM friends f LEFT JOIN users u ON f.friendId = u.id
+    const statement = `SELECT f.friendId, u.name, f.updateAt, f.unread FROM friends f LEFT JOIN users u ON f.friendId = u.id
     WHERE f.statue = 2 AND f.userId = ? ORDER BY f.updateAt DESC;`;
     const result = await connection.execute(statement,[userId]);
     return {
