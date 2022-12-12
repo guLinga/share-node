@@ -51,7 +51,7 @@ class FriendService{
     const statement = `INSERT INTO message (userId,friendId,message) VALUES (?,?,?);`;
     const result = await connection.execute(statement,[userId,friendId,message]);
     // 添加未读消息
-    await this.addUnread(userId,friendId);
+    await this.addUnread(friendId,userId);
     return {
       code: 200,
       msg: '发送成功',
