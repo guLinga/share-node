@@ -46,7 +46,6 @@ class FriendService{
 
   // 发送消息
   async send(userId,friendId,message){
-    console.log(userId,friendId);
     if(!userId||!friendId||!message)return {code: 400,msg: '参数传递不完整'};
     const statement = `INSERT INTO message (userId,friendId,message) VALUES (?,?,?);`;
     const result = await connection.execute(statement,[userId,friendId,message]);
