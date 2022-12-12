@@ -71,7 +71,7 @@ class FriendService{
   // 遍历我收到的好友请求列表
   async getFriendQuest(userId){
     if(!userId)return {code:400,msg:'参数传递不完整'};
-    const statement = `SELECT f.friendId, u.name, f.updateAt FROM friends f LEFT JOIN users u ON f.friendId = u.id
+    const statement = `SELECT f.userId, u.name, f.updateAt FROM friends f LEFT JOIN users u ON f.userId = u.id
     WHERE f.friendId = ? AND f.statue = 0 ORDER BY f.updateAt DESC;`
     const result = await connection.execute(statement,[userId]);
     return {
