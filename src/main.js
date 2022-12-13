@@ -24,8 +24,9 @@ io.on("connection",(socket)=>{
   // 发送消息
   socket.on("send-msg", (data) => {
     const sendUserSocket = onlineUsers.get(data.to);
+    console.log(data);
     if (sendUserSocket) {
-      data.msg.data.message = data.msg.data.message.replace('<','&lt;').replace('>','&gt;').replace('\n','<br>');
+      data.msg.data.message = data.msg.data.message.replace('<','&lt;').replace('>','&gt;');
       sendUserSocket.emit("msg-recieve", data.msg);
     }
   });
