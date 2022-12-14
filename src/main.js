@@ -24,7 +24,6 @@ io.on("connection",(socket)=>{
   // 发送消息
   socket.on("send-msg", (data) => {
     const sendUserSocket = onlineUsers.get(data.to);
-    console.log(data);
     if (sendUserSocket) {
       data.msg.data.message = data.msg.data.message.replace('<','&lt;').replace('>','&gt;');
       sendUserSocket.emit("msg-recieve", data.msg);
@@ -35,6 +34,13 @@ io.on("connection",(socket)=>{
     const sendUserSocket = onlineUsers.get(data.to);
     if(sendUserSocket){
       sendUserSocket.emit("recivece_friend_quest", data);
+    }
+  })
+  // 发送同意好友请求
+  socket.on("agree_friend_quest", (data) => {
+    const sendUserSocket = onlineUsers.get(data.to);
+    if(sendUserSocket){
+      sendUserSocket.emit("agree_friend_quest", data);
     }
   })
 })
