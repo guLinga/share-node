@@ -10,7 +10,9 @@ class FriendService{
     const temp = await this.friendQuest(friendId,userId);
     if(temp.length!==0){
       //如果是，那么直接修改值和添加一条数据
-      await this.modifyStatue(friendId,'2');
+      // 将未读好友清空
+      await this.setNoFriendUnread(friendId,userId,0);
+      await this.modifyStatue(userId,friendId,'2');
       await this.addStatue(userId,friendId,'2');
       return {code:200,msg:'添加成功'};
     }else{
@@ -19,9 +21,13 @@ class FriendService{
       const temp2 = await this.friendQuest(userId,friendId);
       if(temp2.length===0){
         // 如果不是，则添加数据
-        await this.addStatue(userId,friendId,'0');
+        await this.addStatue(userId,friendId,0);
+        console.log(friendId,userId);
+        await this.setNoFriendUnread(userId,friendId,1);
+        return {code:200,msg:'笔友请求发送成功'}
+      }else{
+        return {code:400,msg:'好友请求已发送不能重复发送'}
       }
-      return {code:200,msg:'笔友请求发送成功'}
     }
   }
 
@@ -97,7 +103,7 @@ class FriendService{
   // 遍历我收到的好友请求列表
   async getFriendQuest(userId){
     if(!userId)return {code:400,msg:'参数传递不完整'};
-    const statement = `SELECT f.userId friendId, u.name, f.updateAt FROM friends f LEFT JOIN users u ON f.userId = u.id
+    const statement = `SELECT f.userId friendId, u.name, f.updateAt, f.unread FROM friends f LEFT JOIN users u ON f.userId = u.id
     WHERE f.friendId = ? AND f.statue = 0 ORDER BY f.updateAt DESC;`
     const result = await connection.execute(statement,[userId]);
     return {
@@ -137,17 +143,24 @@ class FriendService{
   }
 
   //修改statue的状态，2表示添加好友，0表示发起好友请求
-  async modifyStatue(userId,statue){
-    const statement = `UPDATE friends SET statue = ? WHERE userId = ?;`;
-    await connection.execute(statement,[statue,userId]);
+  async modifyStatue(userId,friendId,statue){
+    const statement = `UPDATE friends SET statue = ? WHERE userId = ? AND friendId = ?;`;
+    await connection.execute(statement,[statue,friendId,userId]);
   }
 
   // 添加的数据
   async addStatue(userId,friendId,statue){
-    const statement = `INSERT INTO friends (userId,friendId,statue) VALUES (?,?,?);`;
+    console.log(userId,friendId,statue);
+    const statement = `INSERT INTO friends (userId,friendId,statue,unread) VALUES (?,?,?,0);`;
     await connection.execute(statement,[userId,friendId,statue]);
   }
 
+  // 设置未加好友的信息未读
+  async setNoFriendUnread(userId,friendId,unread){
+    console.log(userId,friendId,unread);
+    const statement = `UPDATE friends SET unread = ? WHERE userId = ? AND friendId = ?;`;
+    await connection.execute(statement,[unread,userId,friendId]);
+  }
 
 
 }
