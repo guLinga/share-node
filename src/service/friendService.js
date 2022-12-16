@@ -14,6 +14,8 @@ class FriendService{
       await this.setNoFriendUnread(friendId,userId,0);
       await this.modifyStatue(userId,friendId,'2');
       await this.addStatue(userId,friendId,'2');
+      // 将好友设置一条未读消息，加好友成功
+      await this.setNoFriendUnread(userId,friendId,1);
       return {code:200,msg:'添加成功'};
     }else{
       //如果否
@@ -22,7 +24,6 @@ class FriendService{
       if(temp2.length===0){
         // 如果不是，则添加数据
         await this.addStatue(userId,friendId,0);
-        console.log(friendId,userId);
         await this.setNoFriendUnread(userId,friendId,1);
         return {code:200,msg:'笔友请求发送成功'}
       }else{
@@ -150,14 +151,12 @@ class FriendService{
 
   // 添加的数据
   async addStatue(userId,friendId,statue){
-    console.log(userId,friendId,statue);
     const statement = `INSERT INTO friends (userId,friendId,statue,unread) VALUES (?,?,?,0);`;
     await connection.execute(statement,[userId,friendId,statue]);
   }
 
   // 设置未加好友的信息未读
   async setNoFriendUnread(userId,friendId,unread){
-    console.log(userId,friendId,unread);
     const statement = `UPDATE friends SET unread = ? WHERE userId = ? AND friendId = ?;`;
     await connection.execute(statement,[unread,userId,friendId]);
   }
