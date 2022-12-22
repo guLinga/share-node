@@ -4,8 +4,8 @@ require('./app/database');
 const socket = require('socket.io');
 
 // 开启服务
-const server = app.listen(config.App_PORT,function(){
-  console.log(`服务器启动成功,port:${config.App_PORT}`);
+const server = app.listen(config.APP_PORT,function(){
+  console.log(`服务器启动成功,port:${config.APP_PORT}`);
 })
 
 // socket.io
