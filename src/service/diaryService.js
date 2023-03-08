@@ -56,6 +56,13 @@ class DiaryService{
     return result;
   }
 
+  // 查询用户所有日记
+  async allDiary(userId){
+    const statement = `SELECT * FROM diarys WHERE userId = ? ORDER BY diarys.time ASC;`;
+    const result = await connection.execute(statement,[userId]);
+    return result;
+  }
+
 }
 
 module.exports = new DiaryService();

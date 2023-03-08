@@ -33,6 +33,18 @@ class DiaryController{
     }
   }
 
+  // 查询用户所有日记
+  async allDiary(ctx,next){
+    const {userId} = ctx.request.query;
+    console.log(userId);
+    const result = await service.allDiary(userId);
+    ctx.body = {
+      code: 200,
+      msg: '查询成功',
+      data: result[0]
+    }
+  }
+
 }
 
 module.exports = new DiaryController();

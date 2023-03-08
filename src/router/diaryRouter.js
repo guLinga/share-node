@@ -1,6 +1,6 @@
 const Router = require('koa-router');
 const diaryRouter = new Router({prefix: '/diary'});
-const {article,searchDiary,calendarList} = require('../controller/diaryController');
+const {article,searchDiary,calendarList,allDiary} = require('../controller/diaryController');
 
 //添加或修改日记内容
 diaryRouter.post('/article',article);
@@ -8,5 +8,7 @@ diaryRouter.post('/article',article);
 diaryRouter.get('/search',searchDiary);
 // 查询用户的所有日记的日期
 diaryRouter.get('/calendar',calendarList);
+// 查询用户的所有日记
+diaryRouter.get('/allDiary',allDiary)
 
 module.exports = diaryRouter;
